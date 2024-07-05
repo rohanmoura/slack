@@ -7,8 +7,11 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: 'Slackzz',
+  title: 'Slack',
   description: 'Slack clone codewithlari',
+  icons: {
+    icon: "/icon.ico.png"
+  }
 };
 
 export const revalidate = 0;
