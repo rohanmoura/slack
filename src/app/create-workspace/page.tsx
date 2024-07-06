@@ -1,14 +1,17 @@
 "use client"
+import ImageUpload from '@/components/image-upload';
 import Typography from '@/components/typhography'
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useCreateWorkSpaceValues } from '@/hooks/create-workspace-values';
-import React from 'react'
+import React, { useState } from 'react'
 import { BiLeftArrow } from 'react-icons/bi';
 
 const CreateWorkSpace = () => {
 
   const { currStep } = useCreateWorkSpaceValues();
+
+
 
   let stepInView = null;
 
@@ -63,8 +66,12 @@ const Step1 = () => {
 const Step2 = () => {
 
   const { name, setCurrStep, updateValues, updateImageURL, imageurl } = useCreateWorkSpaceValues();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = () => { };
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    
+   };
 
   return (
     <>
@@ -79,7 +86,8 @@ const Step2 = () => {
           variant='p'
         />
 
-        <fieldset className='mt-6 flex flex-col items-center space-y-9'>
+        <fieldset disabled={isSubmitting} className='mt-6 flex flex-col items-center space-y-9'>
+          <ImageUpload />
           <div className='space-x-5'>
             <Button onClick={() => {
               updateImageURL("");
