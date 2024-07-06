@@ -9,7 +9,8 @@ import { supaBaseBrowserClients } from '@/supabase/supabaseClient';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Provider } from '@supabase/supabase-js';
 import Image from 'next/image';
-import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { BsSlack } from "react-icons/bs";
 import { FcGoogle } from 'react-icons/fc';
@@ -20,7 +21,25 @@ import { z } from 'zod';
 const AuthPage = () => {
 
   const [isAuthenticated, setisAuthenticated] = useState(false);
+  const [isMounted, setisMounted] = useState(false);
 
+  const router = useRouter();
+
+  useEffect(() => {
+    const getCurrUser = async () => {
+      const {
+        data: { session },
+      } = await supaBaseBrowserClients.auth.getSession();
+
+      if (session) {
+        return router.push('/');
+      }
+    };
+
+    getCurrUser();
+    setisMounted(true);
+  }, [router]);
+  
   const formSchema = z.object({
     email: z.string().email(),
     // password: z.string().min(6),
@@ -37,7 +56,7 @@ const AuthPage = () => {
     setisAuthenticated(true);
     const response = await registerWithEmail(values);
     const { data, error } = JSON.parse(response);
-    if(error){
+    if (error) {
       console.warn("Sign In Eror", error)
       return;
     }
@@ -52,6 +71,10 @@ const AuthPage = () => {
       }
     })
     setisAuthenticated(false);
+  }
+
+  if (!isMounted) {
+    return null;
   }
 
   return (
