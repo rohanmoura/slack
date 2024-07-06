@@ -20,7 +20,7 @@ export type Database = {
           name: string | null
           phone: string | null
           type: string | null
-          workplaces: string[] | null
+          workspace: string[] | null
         }
         Insert: {
           avatar_url: string
@@ -32,7 +32,7 @@ export type Database = {
           name?: string | null
           phone?: string | null
           type?: string | null
-          workplaces?: string[] | null
+          workspace?: string[] | null
         }
         Update: {
           avatar_url?: string
@@ -44,7 +44,7 @@ export type Database = {
           name?: string | null
           phone?: string | null
           type?: string | null
-          workplaces?: string[] | null
+          workspace?: string[] | null
         }
         Relationships: [
           {

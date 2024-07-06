@@ -10,7 +10,7 @@ export default async function Home() {
     return redirect("/auth")
   }
 
-  const userWorkspaceId = userData.workplaces?.[0]
+  const userWorkspaceId = userData.workspace?.[0]
 
   if(!userWorkspaceId) {
     return redirect("/create-workspace")
