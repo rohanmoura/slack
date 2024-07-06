@@ -1,10 +1,13 @@
 "use client"
 
+import { registerWithEmail } from '@/actions/register-with-email';
 import Typography from '@/components/typhography';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { supaBaseBrowserClients } from '@/supabase/supabaseClient';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Provider } from '@supabase/supabase-js';
 import Image from 'next/image';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
@@ -31,8 +34,24 @@ const AuthPage = () => {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values, isAuthenticated);
+    setisAuthenticated(true);
+    const response = await registerWithEmail(values);
+    const { data, error } = JSON.parse(response);
+    if(error){
+      console.warn("Sign In Eror", error)
+      return;
+    }
+  }
 
+  async function socialAuth(provider: Provider) {
+    setisAuthenticated(true);
+    await supaBaseBrowserClients.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${location.origin}/auth/callback`,
+      }
+    })
+    setisAuthenticated(false);
   }
 
   return (
@@ -45,11 +64,11 @@ const AuthPage = () => {
         <Typography text='Sign in to your Slack' variant="h2" className='mb-3' />
         <Typography text='Enter your email address' variant="p" className='opacity-90 mb-7' />
         <div className='flex flex-col space-y-4'>
-          <Button disabled={isAuthenticated} variant={"outline"} className='py-6 border-2 flex space-x-3'>
+          <Button disabled={isAuthenticated} variant={"outline"} className='py-6 border-2 flex space-x-3' onClick={() => socialAuth("google")}>
             <FcGoogle size={25} />
             <Typography text='Sign in with Google' variant="p" className='text-xl' />
           </Button>
-          <Button disabled={isAuthenticated} variant={"outline"} className='py-6 border-2 flex space-x-3'>
+          <Button disabled={isAuthenticated} variant={"outline"} className='py-6 border-2 flex space-x-3' onClick={() => socialAuth("github")}>
             <RxGithubLogo size={25} />
             <Typography text='Sign in with Github' variant="p" className='text-xl' />
           </Button>
