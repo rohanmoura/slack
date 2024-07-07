@@ -1,11 +1,13 @@
 "use client"
+import createWorkspace from '@/actions/create-workspace';
 import ImageUpload from '@/components/image-upload';
 import Typography from '@/components/typhography'
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useCreateWorkSpaceValues } from '@/hooks/create-workspace-values';
 import React, { useState } from 'react'
-import { BiLeftArrow } from 'react-icons/bi';
+import slugify from "slugify";
+import { v4 as uuid } from "uuid";
 
 const CreateWorkSpace = () => {
 
@@ -70,8 +72,11 @@ const Step2 = () => {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    
-   };
+    const slug = slugify(name)
+    const invite_code = uuid();
+    const error = await createWorkspace({ imageurl, invite_code, slug, name });
+    setIsSubmitting(true);
+  };
 
   return (
     <>
