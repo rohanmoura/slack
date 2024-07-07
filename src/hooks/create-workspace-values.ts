@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 type CreateWorkSpaceValues = {
     name: string;
-    imageurl: string;
+    imageUrl: string;
     updateImageURL: (url: string) => void;
     updateValues: (values: Partial<CreateWorkSpaceValues>) => void;
     currStep: number;
@@ -11,8 +11,8 @@ type CreateWorkSpaceValues = {
 
 export const useCreateWorkSpaceValues = create<CreateWorkSpaceValues>(set => ({
     name: "",
-    imageurl: "",
-    updateImageURL: url => set({ imageurl: url }),
+    imageUrl: "",
+    updateImageURL: url => set({ imageUrl: url }),
     updateValues: values => set(values),
     currStep: 1,
     setCurrStep: step => set({ currStep: step })

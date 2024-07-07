@@ -1,26 +1,30 @@
-import { supabaseServerClient } from "@/supabase/supabaseServer";
-import { User } from "@/types/app";
+import { supabaseServerClient } from '@/supabase/supabaseServer';
+import { NextApiRequest, NextApiResponse } from 'next';
 
+import { User } from '@/types/app';
 
 export const getUserData = async (): Promise<User | null> => {
-    const supabase = await supabaseServerClient();
+  const supabase = await supabaseServerClient();
 
-    const { data: { user }, } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-    if (!user) {
-        console.log("User not found", user);
-        return null;
-    }
+  if (!user) {
+    console.log('NO USER', user);
+    return null;
+  }
 
-    const { data, error } = await supabase
-        .from("users")
-        .select("*")
-        .eq("id", user.id)
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', user.id);
 
-    if (error) {
-        console.log("Error fetching user data", error);
-        return null;
-    }
+  if (error) {
+    console.log(error);
+    return null;
+  }
 
-    return data ? data[0] : null;
-}
+  return data ? data[0] : null;
+};
+

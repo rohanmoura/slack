@@ -20,7 +20,7 @@ export type Database = {
           name: string | null
           phone: string | null
           type: string | null
-          workspace: string[] | null
+          workspaces: string[] | null
         }
         Insert: {
           avatar_url: string
@@ -32,7 +32,7 @@ export type Database = {
           name?: string | null
           phone?: string | null
           type?: string | null
-          workspace?: string[] | null
+          workspaces?: string[] | null
         }
         Update: {
           avatar_url?: string
@@ -44,7 +44,7 @@ export type Database = {
           name?: string | null
           phone?: string | null
           type?: string | null
-          workspace?: string[] | null
+          workspaces?: string[] | null
         }
         Relationships: [
           {
@@ -56,13 +56,13 @@ export type Database = {
           },
         ]
       }
-      workspace: {
+      workspaces: {
         Row: {
           channels: string[] | null
           created_at: string
           id: string
           image_url: string | null
-          invite_code: string | null
+          invite_code: string
           members: string[] | null
           name: string
           regulators: string[] | null
@@ -74,7 +74,7 @@ export type Database = {
           created_at?: string
           id?: string
           image_url?: string | null
-          invite_code?: string | null
+          invite_code: string
           members?: string[] | null
           name: string
           regulators?: string[] | null
@@ -86,7 +86,7 @@ export type Database = {
           created_at?: string
           id?: string
           image_url?: string | null
-          invite_code?: string | null
+          invite_code?: string
           members?: string[] | null
           name?: string
           regulators?: string[] | null
@@ -108,7 +108,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      add_member_to_workspace: {
+        Args: {
+          user_id: string
+          workspace_id: string
+        }
+        Returns: undefined
+      }
+      add_workspace_to_user: {
+        Args: {
+          user_id: string
+          new_workspace: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
