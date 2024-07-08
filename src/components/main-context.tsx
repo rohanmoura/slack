@@ -19,7 +19,7 @@ const MainContent: FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <div
-      className={cn('md:px-2 md:pb-2 md:pt-14 md:h-screen')}
+      className={cn('md:px-2 md:pb-2 md:pt-14 md:h-screen', backgroundColor)}
     >
       <main
         className={cn(
