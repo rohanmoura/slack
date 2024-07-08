@@ -2,6 +2,8 @@ import { redirect } from 'next/navigation';
 
 import { getUserData } from '@/actions/get-user-data';
 import { getCurrentWorkspaaceData, getUserWorkspaceData } from '@/actions/get-user-workspace-data';
+import SideBar from '@/components/sidebar';
+import { WorkSpace as UserWorkSpace } from '@/types/app';
 
 
 const Workspace = async ({
@@ -17,14 +19,15 @@ const Workspace = async ({
 
   const [currentWorkspaceData] = await getCurrentWorkspaaceData(workspaceId);
 
-  console.log(currentWorkspaceData);
-
-
   return (
-    <div className='text-black'>
-      Hello
-      {JSON.stringify(currentWorkspaceData)}
-    </div>
+    <>
+      <div className='hidden md:block text-black'>
+        <SideBar userData={userData} userWorkSpaceData={userWorkspaceData as UserWorkSpace[]} currentWorkSpaceData={currentWorkspaceData} /> /
+      </div>
+      <div className='md:hidden text-black block min-h-screen'>
+        Mobile
+      </div>
+    </>
   );
 };
 
