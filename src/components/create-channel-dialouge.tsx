@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
+import { toast } from 'sonner';
+import { createChannel } from '@/actions/create-channels';
 
 const CreateChannelDialog: FC<{
     dialogOpen: boolean;
@@ -36,7 +38,20 @@ const CreateChannelDialog: FC<{
         const [isSubmitted, setIsSubmitted] = useState(false);
 
         const onsubmit = async ({ name }: z.infer<typeof formSchema>) => {
-            console.log(name);
+            try {
+                setIsSubmitted(true);
+               await createChannel({
+                    name,
+                    userdataId,
+                    workspaceId
+                })
+                setIsSubmitted(false);
+                setDialogOpen(false);
+                form.reset();
+                toast.success("Channel Creation Success")
+            } catch (error) {
+                setIsSubmitted(false);
+            }
         }
 
         return (
