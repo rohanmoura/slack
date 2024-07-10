@@ -23,8 +23,8 @@ const Workspace = async ({
   return (
     <>
       <div className='hidden md:block'>
-        <SideBar userData={userData} userWorkSpaceData={userWorkspaceData as UserWorkSpace[]} currentWorkSpaceData={currentWorkspaceData} /> 
-        <InfoSection />
+        <SideBar userData={userData} userWorkSpaceData={userWorkspaceData as UserWorkSpace[]} currentWorkSpaceData={currentWorkspaceData} />
+        <InfoSection userData={userData} currentWorkspaceData={currentWorkspaceData} />
       </div>
     </>
   );
