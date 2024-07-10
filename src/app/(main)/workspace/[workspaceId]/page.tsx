@@ -4,6 +4,7 @@ import { getUserData } from '@/actions/get-user-data';
 import { getCurrentWorkspaaceData, getUserWorkspaceData } from '@/actions/get-user-workspace-data';
 import SideBar from '@/components/sidebar';
 import { WorkSpace as UserWorkSpace } from '@/types/app';
+import InfoSection from '@/components/info-section';
 
 
 const Workspace = async ({
@@ -21,11 +22,9 @@ const Workspace = async ({
 
   return (
     <>
-      <div className='hidden md:block text-black'>
-        <SideBar userData={userData} userWorkSpaceData={userWorkspaceData as UserWorkSpace[]} currentWorkSpaceData={currentWorkspaceData} /> /
-      </div>
-      <div className='md:hidden text-black block min-h-screen'>
-        Mobile
+      <div className='hidden md:block'>
+        <SideBar userData={userData} userWorkSpaceData={userWorkspaceData as UserWorkSpace[]} currentWorkSpaceData={currentWorkspaceData} /> 
+        <InfoSection />
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import React, { FC, ReactNode } from 'react'
 const MailLayout: FC<{ children: ReactNode }> = ({ children }) => {
     return (
         <ThemeProvider attribute="class"
-            defaultTheme="default"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange>
             <ColorPrefrencesProvider>
