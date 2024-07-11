@@ -7,11 +7,12 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collap
 import { FaArrowDown, FaArrowUp, FaPlus } from 'react-icons/fa';
 import Typography from './typhography';
 import CreateChannelDialog from './create-channel-dialouge';
-import { User, WorkSpace } from '@/types/app';
+import { Channel, User, WorkSpace } from '@/types/app';
 
-const InfoSection: FC<{ userData: User, currentWorkspaceData: WorkSpace }> = ({
+const InfoSection: FC<{ userData: User, currentWorkspaceData: WorkSpace, userWorkSpaceChannels: Channel[] }> = ({
     userData,
-    currentWorkspaceData
+    currentWorkspaceData,
+    userWorkSpaceChannels
 }) => {
 
     const { color } = useColorPrefrences()
@@ -49,14 +50,19 @@ const InfoSection: FC<{ userData: User, currentWorkspaceData: WorkSpace }> = ({
                                 {isChannelCollapsed ? <FaArrowDown /> : <FaArrowUp />}
                                 <Typography className='font-bold' variant='p' text='Channels' />
                             </CollapsibleTrigger>
-                            <div className={cn("cursor-pointer p-2 rounded-full", `hover:${secondayBg}`)}>
+                            <div
+                                className={cn(
+                                    'cursor-pointer p-2 rounded-full',
+                                    `hover:${secondayBg}`
+                                )}
+                            >
                                 <FaPlus onClick={() => setDialogOpen(true)} />
                             </div>
                         </div>
                         <CollapsibleContent>
-                            <Typography variant='p' text='#-channel -name-1' className={cn("px-2 py-1 rounded-sm cursor-pointer", `hover:${secondayBg}`)} />
-                            <Typography variant='p' text='#-channel -name-2' className={cn("px-2 py-1 rounded-sm cursor-pointer", `hover:${secondayBg}`)} />
-                            <Typography variant='p' text='#-channel -name-3' className={cn("px-2 py-1 rounded-sm cursor-pointer", `hover:${secondayBg}`)} />
+                            {userWorkSpaceChannels.map((channel) => (
+                                <Typography key={channel.id} variant='p' text={`# ${channel.name}`} className={cn("px-2 py-1 rounded-sm cursor-pointer", `hover:${secondayBg}`)} />
+                            ))}
                         </CollapsibleContent>
                     </Collapsible>
                 </div>

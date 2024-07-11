@@ -11,6 +11,7 @@ import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { toast } from 'sonner';
 import { createChannel } from '@/actions/create-channels';
+import { useRouter } from 'next/navigation';
 
 const CreateChannelDialog: FC<{
     dialogOpen: boolean;
@@ -37,14 +38,17 @@ const CreateChannelDialog: FC<{
 
         const [isSubmitted, setIsSubmitted] = useState(false);
 
+        const router = useRouter()
+
         const onsubmit = async ({ name }: z.infer<typeof formSchema>) => {
             try {
                 setIsSubmitted(true);
-               await createChannel({
+                await createChannel({
                     name,
                     userdataId,
                     workspaceId
-                })
+                });
+                router.refresh();
                 setIsSubmitted(false);
                 setDialogOpen(false);
                 form.reset();
