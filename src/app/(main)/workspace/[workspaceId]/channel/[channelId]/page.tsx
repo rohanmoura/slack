@@ -6,6 +6,7 @@ import SideBar from '@/components/sidebar'
 import { redirect } from 'next/navigation';
 import { WorkSpace as UserWorkSpace } from '@/types/app';
 import React from 'react'
+import Typography from '@/components/typhography';
 
 const ChannelPage = async ({ params: { channelId, workspaceId } }: {
     params: {
@@ -33,6 +34,7 @@ const ChannelPage = async ({ params: { channelId, workspaceId } }: {
         <div className='hidden md:block'>
             <SideBar userData={userData} userWorkSpaceData={userWorkspaceData as UserWorkSpace[]} currentWorkSpaceData={currentWorkspaceData} />
             <InfoSection userData={userData} currentWorkspaceData={currentWorkspaceData} userWorkSpaceChannels={userWorkSpaceChannels} currentChannelId={channelId} />
+            <Typography text='Channel Page' variant='h1' className='text-2xl' />
         </div>
     )
 }
