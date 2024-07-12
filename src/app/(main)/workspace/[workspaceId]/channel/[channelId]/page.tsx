@@ -7,6 +7,8 @@ import { redirect } from 'next/navigation';
 import { WorkSpace as UserWorkSpace } from '@/types/app';
 import React from 'react'
 import Typography from '@/components/typhography';
+import ChatHeader from '@/components/chat-header';
+import TextEditor from '@/components/text-editor';
 
 const ChannelPage = async ({ params: { channelId, workspaceId } }: {
     params: {
@@ -30,11 +32,29 @@ const ChannelPage = async ({ params: { channelId, workspaceId } }: {
         userData.id
     )
 
+    const currenWorkspaceChannels = userWorkSpaceChannels.find((channel) => channel.id === channelId);
+
+    if (!currenWorkspaceChannels) {
+        return redirect("/")
+    }
+
     return (
         <div className='hidden md:block'>
-            <SideBar userData={userData} userWorkSpaceData={userWorkspaceData as UserWorkSpace[]} currentWorkSpaceData={currentWorkspaceData} />
-            <InfoSection userData={userData} currentWorkspaceData={currentWorkspaceData} userWorkSpaceChannels={userWorkSpaceChannels} currentChannelId={channelId} />
-            <Typography text='Channel Page' variant='h1' className='text-2xl' />
+            <div className='h-[calc(100vh-256px)] overflow-y-auto bg-red-400'>
+                <SideBar userData={userData} userWorkSpaceData={userWorkspaceData as UserWorkSpace[]} currentWorkSpaceData={currentWorkspaceData} />
+                <InfoSection userData={userData} currentWorkspaceData={currentWorkspaceData} userWorkSpaceChannels={userWorkSpaceChannels} currentChannelId={channelId} />
+                <div className='p-4 relative w-full overflow-hidden'>
+                    <ChatHeader title={currenWorkspaceChannels.name} />
+
+                    <div className='mt-10'>
+                        <Typography text='Chat Content' variant='h4' />
+                    </div>
+                </div>
+            </div>
+
+            <div className='m-4'>
+                <TextEditor />
+            </div>
         </div>
     )
 }
