@@ -90,7 +90,7 @@ const TextEditor: FC<{
                                 </DialogDescription>
                             </DialogHeader>
 
-                            <ChatFileUpload userData={userData} workspaceData={workspaceData} channel={channel} />
+                            <ChatFileUpload userData={userData} workspaceData={workspaceData} channel={channel} toggleFileUploadModdle={toggleFileUploadModdle} />
                         </DialogContent>
                 </Dialog>
             </div>
