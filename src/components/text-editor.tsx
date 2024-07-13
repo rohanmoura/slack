@@ -9,7 +9,9 @@ import { StarterKit } from "@tiptap/starter-kit";
 import PlaceHolder from "@tiptap/extension-placeholder";
 import MenuBar from './menu-bar';
 import axios from 'axios';
-import { Channel, WorkSpace } from '@/types/app';
+import { Channel, User, WorkSpace } from '@/types/app';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog';
+import ChatFileUpload from './chat-file-upload';
 
 
 const TextEditor: FC<{
@@ -17,14 +19,19 @@ const TextEditor: FC<{
     type: "Channel" | "DirectMessage";
     channel: Channel;
     workspaceData: WorkSpace
+    userData: User
 }> = ({
     apiUrl,
     type,
     channel,
-    workspaceData
+    workspaceData,
+    userData
 }) => {
 
         const [content, setContent] = useState('');
+        const [FileUploadModdle, setFileUploadModdle] = useState(false);
+
+        const toggleFileUploadModdle = () => setFileUploadModdle(prev => !prev);
 
         const editor = useEditor({
             extensions: [
@@ -64,12 +71,28 @@ const TextEditor: FC<{
                     <EditorContent editor={editor} className='prose w-full h-[150px] dark:text-white leading-[1.15px] overflow-y-hidden whitespace-pre-wrap' />
                 </div>
                 <div className='absolute top-3 z-10 right-3 bg-black dark:bg-white cursor-pointer transition-all duration-500 hover:scale-110 text-white grid place-content-center rounded-full w-6 h-6'>
-                    <FiPlus size={28} className='dark:text-black' />
+                    <FiPlus onClick={toggleFileUploadModdle} size={28} className='dark:text-black' />
                 </div>
 
                 <Button onClick={handleSubmit} disabled={content.length < 2} size={"sm"} className='absolute bottom-1 right-1'>
                     <Send />
                 </Button>
+
+
+                <Dialog onOpenChange={toggleFileUploadModdle} open={FileUploadModdle}>
+                        <DialogContent className='sm:max-w-md'>
+                            <DialogHeader>
+                                <DialogTitle>
+                                    File Upload
+                                </DialogTitle>
+                                <DialogDescription>
+                                    Upload a file to share with your team.
+                                </DialogDescription>
+                            </DialogHeader>
+
+                            <ChatFileUpload userData={userData} workspaceData={workspaceData} channel={channel} />
+                        </DialogContent>
+                </Dialog>
             </div>
         )
     }
