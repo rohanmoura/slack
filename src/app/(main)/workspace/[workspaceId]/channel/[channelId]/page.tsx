@@ -53,7 +53,7 @@ const ChannelPage = async ({ params: { channelId, workspaceId } }: {
             </div>
 
             <div className='m-4'>
-                <TextEditor />
+                <TextEditor channel={currenWorkspaceChannels} workspaceData={currentWorkspaceData} apiUrl='/api/web-scoket/messages' type='Channel' />
             </div>
         </div>
     )
