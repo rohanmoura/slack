@@ -88,12 +88,29 @@ const ChatFileUpload: FC<ChatFileUploadProps> = ({
             return { error: error.message }
         }
 
-        const { data: messageData, error: messageInsertError } = await supabase.from("messages").insert({
-            file_url: data.path,
-            user_id: userData.id,
-            channel_id: channel?.id,
-            workspace_id: workspaceData.id,
-        })
+        let messageInsertError;
+
+        if (recipientId) {
+            const { data: diretMessageData, error: dmError } = await supabase
+                .from('direct_messages')
+                .insert({
+                    file_url: data.path,
+                    user: userData.id,
+                    user_one: userData.id,
+                    user_two: recipientId,
+                });
+
+            messageInsertError = dmError;
+        } else {
+            const { data: messageData, error: me } = await supabase.from("messages").insert({
+                file_url: data.path,
+                user_id: userData.id,
+                channel_id: channel?.id,
+                workspace_id: workspaceData.id,
+            });
+
+            messageInsertError = me;
+        }
 
         if (messageInsertError) {
             console.log("Error inserting message", messageInsertError);

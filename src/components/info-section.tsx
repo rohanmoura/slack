@@ -10,7 +10,7 @@ import CreateChannelDialog from './create-channel-dialouge';
 import { Channel, User, WorkSpace } from '@/types/app';
 import { useRouter } from 'next/navigation';
 
-const InfoSection: FC<{ userData: User, currentWorkspaceData: WorkSpace, userWorkSpaceChannels: Channel[], currentChannelId: string }> = ({
+const InfoSection: FC<{ userData: User, currentWorkspaceData: WorkSpace, userWorkSpaceChannels: Channel[], currentChannelId: string | undefined }> = ({
     userData,
     currentWorkspaceData,
     userWorkSpaceChannels,

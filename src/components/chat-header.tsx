@@ -1,9 +1,12 @@
 import React, { FC } from 'react'
 import Typography from './typhography'
 import { IoMdHeadset } from "react-icons/io";
+import { User } from '@/types/app';
 
-const ChatHeader: FC<{ title: string }> = ({
-    title
+const ChatHeader: FC<{ title: string, chatId: string, userData: User }> = ({
+    title,
+    chatId,
+    userData
 }) => {
     return (
         <div className='absolute h-10 top-0 left-0 w-full'>
